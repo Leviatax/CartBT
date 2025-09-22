@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta Para Adriana</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, rgba(15, 23, 30, 0.95) 0%, rgba(30, 40, 50, 0.95) 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            color: #e6e6e6;
+            overflow-x: hidden;
+            position: relative;
+            font-family: 'Montserrat', sans-serif;
+        }
+        
+        .contenedor {
+            max-width: 900px;
+            width: 100%;
+            background: linear-gradient(to bottom, rgb(25, 35, 40), rgb(18, 28, 33));
+            border-radius: 25px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
+            overflow: hidden;
+            position: relative;
+            border: 2px solid rgba(227, 164, 71, 0.4);
+            z-index: 10;
+        }
+        
+        .encabezado {
+            background: linear-gradient(to right, rgb(35, 45, 50), rgb(0, 90, 130));
+            color: rgb(227, 164, 71);
+            text-align: center;
+            padding: 50px 40px;
+            position: relative;
+            border-bottom: 3px solid rgba(227, 164, 71, 0.5);
+            overflow: hidden;
+        }
+        
+        .encabezado::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="transparent"/><path d="M0,50 L100,50 M50,0 L50,100" stroke="rgba(227, 164, 71, 0.1)" stroke-width="1"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .encabezado h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.6);
+            letter-spacing: 2px;
+            font-weight: 700;
+            color: rgb(227, 164, 71);
+            position: relative;
+            display: inline-block;
+        }
+        
+        .encabezado h1::after {
+            content: "";
+            position: absolute;
+            bottom: -10px;
+            left: 25%;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(to right, transparent, rgb(227, 164, 71), transparent);
+        }
+        
+        .encabezado p {
+            font-style: italic;
+            opacity: 0.9;
+            color: #e6e6e6;
+            font-size: 1.3rem;
+            max-width: 500px;
+            margin: 0 auto;
+            font-weight: 300;
+        }
+        
+        .btn-contenedor {
+            position: relative;
+            z-index: 20;
+            padding: 20px 0;
+            background: linear-gradient(to bottom, rgba(25, 35, 40, 0.9), rgba(18, 28, 33, 0.9));
+            border-bottom: 1px solid rgba(227, 164, 71, 0.3);
+        }
+        
+        .corazon-btn {
+            background: radial-gradient(circle, rgb(227, 164, 71) 0%, rgb(200, 140, 50) 100%);
+            color: rgb(35, 45, 50);
+            border: none;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            font-size: 40px;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: -50px auto 30px;
+            transition: all 0.4s ease;
+            box-shadow: 0 10px 30px rgba(227, 164, 71, 0.6);
+            z-index: 10;
+            position: relative;
+            animation: flotar 4s ease-in-out infinite;
+        }
+        
+        .corazon-btn:hover {
+            background: radial-gradient(circle, rgb(237, 174, 81) 0%, rgb(210, 150, 60) 100%);
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 0 40px rgba(227, 164, 71, 0.9);
+        }
+        
+        .corazon-btn.pulsado {
+            animation: latido 0.8s, flotar 4s ease-in-out infinite;
+            box-shadow: 0 0 40px rgba(227, 164, 71, 0.9);
+        }
+        
+        .cerrar-btn {
+            display: none;
+            background: radial-gradient(circle, rgb(0, 126, 176) 0%, rgb(0, 90, 130) 100%);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 70px;
+            height: 70px;
+            font-size: 28px;
+            cursor: pointer;
+            justify-content: center;
+            align-items: center;
+            margin: 30px auto;
+            transition: all 0.4s ease;
+            box-shadow: 0 6px 25px rgba(0, 126, 176, 0.6);
+            position: relative;
+            animation: flotar 4s ease-in-out infinite;
+        }
+        
+        .cerrar-btn:hover {
+            background: radial-gradient(circle, rgb(10, 146, 196) 0%, rgb(0, 110, 150) 100%);
+            transform: scale(1.1);
+            box-shadow: 0 0 30px rgba(0, 126, 176, 0.9);
+        }
+        
+        .cerrar-btn.mostrar {
+            display: flex;
+        }
+        
+        @keyframes latido {
+            0% { transform: scale(1); }
+            15% { transform: scale(1.2); }
+            30% { transform: scale(1); }
+            45% { transform: scale(1.2); }
+            60% { transform: scale(1); }
+            100% { transform: scale(1); }
+        }
+        
+        @keyframes flotar {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .carta {
+            padding: 50px 60px;
+            color: #e6e6e6;
+            line-height: 1.9;
+            font-size: 1.25rem;
+            display: none;
+            opacity: 0;
+            transition: opacity 1.2s ease;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="rgb(25, 35, 40)"/><path d="M0,0 L100,100 M100,0 L0,100" stroke="rgba(227, 164, 71, 0.1)" stroke-width="1"/></svg>');
+            max-height: 0;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .carta::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(227, 164, 71, 0.03) 0%, transparent 100%);
+            pointer-events: none;
+        }
+        
+        .carta.mostrar {
+            display: block;
+            opacity: 1;
+            max-height: 5000px; /* Un valor alto para permitir la expansión */
+            transition: opacity 1.2s ease, max-height 2.5s ease;
+        }
+        
+        .contenido p {
+            margin-bottom: 30px;
+            text-align: justify;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 400;
+        }
+        
+        .saludo {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: rgb(227, 164, 71);
+            text-align: center;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .saludo::after {
+            content: "";
+            position: absolute;
+            bottom: -15px;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgb(227, 164, 71), transparent);
+        }
+        
+        .destacado {
+            color: rgb(227, 164, 71);
+            font-weight: 600;
+            text-shadow: 0 0 5px rgba(227, 164, 71, 0.3);
+            padding: 0 3px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .destacado::after {
+            content: "";
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: rgb(227, 164, 71);
+            opacity: 0.5;
+        }
+        
+        .firma {
+            text-align: right;
+            margin-top: 50px;
+            font-style: italic;
+            color: rgb(0, 150, 200);
+            font-weight: bold;
+            font-size: 1.5rem;
+            text-shadow: 0 0 8px rgba(0, 150, 200, 0.5);
+            font-family: 'Playfair Display', serif;
+            position: relative;
+            padding-right: 20px;
+        }
+        
+        .firma::before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            right: 0;
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(to right, transparent, rgb(0, 150, 200));
+            transform: translateY(-50%);
+        }
+        
+        .decoracion {
+            position: absolute;
+            opacity: 0.15;
+            z-index: 0;
+            animation: flotar 8s ease-in-out infinite;
+        }
+        
+        .decoracion.corazon1 {
+            top: 15%;
+            left: 10%;
+            font-size: 120px;
+            color: rgb(227, 164, 71);
+            animation-delay: 0.5s;
+        }
+        
+        .decoracion.corazon2 {
+            bottom: 15%;
+            right: 10%;
+            font-size: 90px;
+            color: rgb(0, 126, 176);
+            animation-delay: 1s;
+        }
+        
+        .separador {
+            text-align: center;
+            margin: 40px 0;
+            font-size: 32px;
+            color: rgb(227, 164, 71);
+            opacity: 0.7;
+            letter-spacing: 20px;
+            position: relative;
+        }
+        
+        .separador i {
+            animation: rotar 10s linear infinite;
+        }
+        
+        @keyframes rotar {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .footer {
+            background-color: rgb(20, 30, 35);
+            color: rgb(180, 180, 180);
+            text-align: center;
+            padding: 25px;
+            font-size: 1.1rem;
+            border-top: 1px solid rgba(227, 164, 71, 0.3);
+            position: relative;
+        }
+        
+        .footer::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 1px;
+            background: linear-gradient(to right, transparent, rgb(227, 164, 71), transparent);
+        }
+        
+        .estrellas {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        
+        .estrella {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 5s infinite;
+        }
+        
+        /* Contenedor para la lluvia de emojis */
+        .lluvia-emojis {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
+        }
+        
+        .emoji {
+            position: absolute;
+            top: -50px;
+            font-size: 32px;
+            animation: caer linear infinite;
+            opacity: 0.3;
+            user-select: none;
+        }
+        
+        .girasol {
+            color: #FFD700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+        }
+        
+        .estrella-emoji {
+            color: #FFFFFF;
+            text-shadow: 0 0 12px rgba(255, 255, 255, 0.7);
+        }
+        
+        .luna {
+            color: #E6E6FA;
+            text-shadow: 0 0 12px rgba(230, 230, 250, 0.6);
+        }
+        
+        /* Controles de música */
+        .control-musica {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(25, 35, 40, 0.8);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(227, 164, 71, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .control-musica:hover {
+            transform: scale(1.1);
+            background: rgba(35, 45, 50, 0.9);
+        }
+        
+        .control-musica i {
+            font-size: 24px;
+            color: rgb(227, 164, 71);
+        }
+        
+        .info-musica {
+            position: absolute;
+            bottom: 70px;
+            right: 0;
+            background: rgba(25, 35, 40, 0.9);
+            padding: 10px 15px;
+            border-radius: 10px;
+            font-size: 0.9rem;
+            color: #e6e6e6;
+            width: 250px;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            pointer-events: none;
+            border: 1px solid rgba(227, 164, 71, 0.3);
+        }
+        
+        .control-musica:hover .info-musica {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .nombre-cancion {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            z-index: 100;
+            background: rgba(25, 35, 40, 0.8);
+            padding: 8px 15px;
+            border-radius: 20px;
+            color: rgb(227, 164, 71);
+            font-size: 0.9rem;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(227, 164, 71, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            font-weight: 500;
+            transform: translateY(10px);
+            pointer-events: none;
+        }
+        
+        .nombre-cancion.mostrar {
+            opacity: 0.9;
+            transform: translateY(0);
+        }
+        
+        .gif-container {
+            position: fixed;
+            bottom: 130px;
+            right: 20px;
+            z-index: 100;
+            width: 100px;
+            height: 100px;
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0.8) translateY(10px);
+            transition: all 0.5s ease;
+            pointer-events: none;
+        }
+        
+        .gif-container.mostrar {
+            opacity: 1;
+            transform: scale(1) translateY(0);
+        }
+        
+        .gif-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain; /* <-- ESTE ES EL CAMBIO */
+            border-radius: 10px;
+        }
+        
+        @keyframes caer {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.3;
+            }
+            80% {
+                opacity: 0.2;
+            }
+            100% {
+                transform: translateY(100vh) rotate(30deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes caer-lenta {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.2;
+            }
+            80% {
+                opacity: 0.15;
+            }
+            100% {
+                transform: translateY(100vh) rotate(15deg);
+                opacity: 0;
+            }
+        }
+        
+        @keyframes twinkle {
+            0% { opacity: 0.2; }
+            50% { opacity: 1; }
+            100% { opacity: 0.2; }
+        }
+        
+        /* Media Queries para Responsividad */
+        @media (max-width: 1000px) {
+            .contenedor { max-width: 95%; border-radius: 20px; }
+            .encabezado { padding: 40px 30px; }
+            .encabezado h1 { font-size: 2.8rem; }
+            .carta { padding: 40px 45px; }
+        }
+        
+        @media (max-width: 768px) {
+            .contenedor { max-width: 98%; border-radius: 18px; }
+            .encabezado { padding: 30px 20px; }
+            .encabezado h1 { font-size: 2.2rem; }
+            .encabezado p { font-size: 1.1rem; }
+            .corazon-btn { width: 85px; height: 85px; font-size: 35px; margin: -42px auto 25px; }
+            .carta { padding: 30px 35px; font-size: 1.1rem; }
+            .saludo { font-size: 1.8rem; }
+            .separador { font-size: 28px; letter-spacing: 15px; margin: 30px 0; }
+            .decoracion.corazon1 { font-size: 90px; }
+            .decoracion.corazon2 { font-size: 70px; }
+            .firma { font-size: 1.3rem; }
+            .control-musica { bottom: 15px; right: 15px; width: 50px; height: 50px; }
+            .control-musica i { font-size: 20px; }
+            .info-musica { width: 200px; font-size: 0.8rem; }
+            .nombre-cancion { bottom: 75px; right: 15px; font-size: 0.8rem; padding: 6px 12px; }
+            .gif-container { bottom: 115px; right: 15px; width: 80px; height: 80px; }
+        }
+        
+        @media (max-width: 480px) {
+            body { padding: 15px; }
+            .contenedor { max-width: 100%; border-radius: 15px; }
+            .encabezado { padding: 25px 15px; }
+            .encabezado h1 { font-size: 1.8rem; margin-bottom: 10px; }
+            .encabezado p { font-size: 1rem; }
+            .corazon-btn { width: 75px; height: 75px; font-size: 30px; margin: -37px auto 20px; }
+            .carta { padding: 20px 25px; font-size: 1rem; line-height: 1.8; }
+            .saludo { font-size: 1.6rem; margin-bottom: 30px; }
+            .contenido p { margin-bottom: 25px; }
+            .separador { font-size: 24px; letter-spacing: 10px; margin: 25px 0; }
+            .firma { margin-top: 40px; font-size: 1.2rem; }
+            .decoracion.corazon1 { font-size: 70px; left: 5%; }
+            .decoracion.corazon2 { font-size: 50px; right: 5%; }
+            .footer { padding: 20px; font-size: 1rem; }
+            .emoji { font-size: 26px; }
+            .cerrar-btn { width: 60px; height: 60px; font-size: 24px; }
+            .control-musica { bottom: 10px; right: 10px; width: 45px; height: 45px; }
+            .control-musica i { font-size: 18px; }
+            .info-musica { width: 180px; font-size: 0.75rem; bottom: 60px; }
+            .nombre-cancion { bottom: 65px; right: 10px; font-size: 0.75rem; padding: 5px 10px; }
+            .gif-container { bottom: 105px; right: 10px; width: 70px; height: 70px; }
+        }
+        
+        @media (max-width: 360px) {
+            .encabezado h1 { font-size: 1.6rem; }
+            .carta { padding: 15px 20px; }
+            .saludo { font-size: 1.4rem; }
+            .separador { font-size: 20px; letter-spacing: 8px; }
+            .decoracion.corazon1 { font-size: 60px; }
+            .decoracion.corazon2 { font-size: 40px; }
+            .emoji { font-size: 22px; }
+            .nombre-cancion { font-size: 0.7rem; bottom: 60px; }
+            .gif-container { bottom: 100px; width: 60px; height: 60px; }
+        }
+        
+        @media (max-height: 600px) and (orientation: landscape) {
+            body { padding: 10px; }
+            .contenedor { max-width: 90%; max-height: 90vh; overflow-y: auto; }
+            .encabezado { padding: 20px 15px; }
+            .carta { padding: 20px 30px; max-height: 50vh; overflow-y: auto; }
+            .corazon-btn { width: 65px; height: 65px; font-size: 26px; margin: -32px auto 15px; }
+            .control-musica { bottom: 5px; right: 5px; }
+            .nombre-cancion { bottom: 55px; right: 5px; }
+            .gif-container { bottom: 95px; right: 5px; width: 50px; height: 50px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="lluvia-emojis" id="lluviaEmojis"></div>
+    
+    <div class="control-musica" id="controlMusica">
+        <i class="fas fa-play"></i>
+        <div class="info-musica">
+            Dua Lipa - Training Season
+        </div>
+    </div>
+    
+    <div class="nombre-cancion" id="nombreCancion">
+        Dua Lipa - Training Season
+    </div>
+    
+    <div class="gif-container" id="gifContainer">
+        <img src="cat.gif" alt="Gato animado">
+    </div>
+    
+    <audio id="musicaFondo" loop preload="auto">
+        <source src="1.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+    
+    <div class="contenedor">
+        <div class="encabezado">
+            <h1>Una Carta Para Adriana</h1>
+            <p>Haz clic en el corazón para revelar mi mensaje</p>
+        </div>
+        
+        <div class="btn-contenedor">
+            <button class="corazon-btn" id="corazonBtn">
+                <i class="fas fa-heart"></i>
+            </button>
+        </div>
+        
+        <div class="carta" id="carta">
+            <div class="saludo">Hola Adriana:</div>
+            
+            <div class="contenido">
+                <p>Han pasado años desde aquellos días en que, aunque solo te miraba de lejos, tu presencia lograba atrapar mis pensamientos y llenar de luz mis silencios. Nunca fui valiente para expresarlo, y por eso guardé todo dentro, en secreto, dejando que el tiempo se llevara las <span class="destacado">palabras que quería decirte</span>. Hoy siento que necesito liberarlas, no para esperar algo de ti, sino para cerrar un capítulo que ha vivido en mí durante demasiado tiempo.</p>
+                
+                <div class="separador">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                
+                <p>Tu forma de ser, tu mirada profunda y sincera, y esa <span class="destacado">sonrisa que iluminaba todo a tu alrededor</span>, me cautivaron sin que lo supieras. Cada instante en que te veía, aunque fuera de lejos, me llenaba de una mezcla de admiración y asombro. Lo confieso: <span class="destacado">me enamoré de ti en silencio</span>. No fue un amor reclamante, ni buscó correspondencia; fue un amor que existió como motor interno, que me enseñó a valorar la belleza de lo auténtico y la fuerza de las emociones sinceras.</p>
+                
+                <div class="separador">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-moon"></i>
+                </div>
+                
+                <p>Nunca tuve la oportunidad de desahogar mi corazón. Cuando te fuiste, las palabras se quedaron atrapadas en mi garganta, y el tiempo se llevó el momento que nunca llegué a crear. Hoy escribo para darles voz, para que finalmente existan, y para que este <span class="destacado">amor silencioso</span> pueda, al fin, descansar en la honestidad. Te amé y te sigo recordando con la misma pureza y admiración, con la gratitud de haber sido tocado por tu esencia, aunque solo haya sido desde la distancia.</p>
+                
+                <div class="separador">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+                
+                <p>No espero que leas esto con alguna obligación, ni que cambie nada en tu vida. Solo quiero que sepas que este sentimiento, guardado durante años, fue real y profundo, y que su existencia me ayudó a crecer, a aprender y a entender la <span class="destacado">belleza de admirar sin exigir</span>.</p>
+                
+                <div class="separador">
+                    <i class="fas fa-moon"></i>
+                    <i class="fas fa-heart"></i>
+                    <i class="fas fa-moon"></i>
+                </div>
+                
+                <p>Te deseo lo mejor, que la vida te trate con delicadeza y gloria, que tus pasos siempre encuentren alegría y serenidad, y que cada decisión te acerque a la plenitud y a la <span class="destacado">felicidad que mereces</span>. Gracias por existir en mi vida, aunque haya sido solo como inspiración, y gracias por enseñarme que hay amores que no necesitan ser proclamados para ser verdaderos.</p>
+            </div>
+            
+            <div class="firma">
+                <p>Con respeto, gratitud y sinceridad,</p>
+                <p>Jeampierre Contreras</p>
+            </div>
+            
+            <div class="separador">
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+                <i class="fas fa-heart"></i>
+            </div>
+        </div>
+        
+        <button class="cerrar-btn" id="cerrarBtn">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="decoracion corazon1">❤</div>
+        <div class="decoracion corazon2">❤</div>
+        
+        <div class="estrellas" id="estrellas"></div>
+        
+        <div class="footer">
+            <p>Hecho con <i class="fas fa-heart" style="color: rgb(227, 164, 71);"></i> - Para Adriana, la musa de mis pensamientos</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const corazonBtn = document.getElementById('corazonBtn');
+            const cerrarBtn = document.getElementById('cerrarBtn');
+            const carta = document.getElementById('carta');
+            const estrellas = document.getElementById('estrellas');
+            const lluviaEmojis = document.getElementById('lluviaEmojis');
+            const controlMusica = document.getElementById('controlMusica');
+            const musicaFondo = document.getElementById('musicaFondo');
+            const nombreCancion = document.getElementById('nombreCancion');
+            const gifContainer = document.getElementById('gifContainer');
+            const iconoMusica = controlMusica.querySelector('i');
+
+            // Crear estrellas de fondo
+            for (let i = 0; i < 50; i++) {
+                const estrella = document.createElement('div');
+                estrella.classList.add('estrella');
+                estrella.style.width = Math.random() * 3 + 'px';
+                estrella.style.height = estrella.style.width;
+                estrella.style.left = Math.random() * 100 + '%';
+                estrella.style.top = Math.random() * 100 + '%';
+                estrella.style.animationDelay = Math.random() * 5 + 's';
+                estrellas.appendChild(estrella);
+            }
+
+            // Crear lluvia de emojis (girasoles, estrellas y lunas)
+            function crearLluviaEmojis() {
+                const windowWidth = window.innerWidth;
+                const cantidadEmojis = Math.floor(windowWidth / 35); // Ajustar densidad
+                const tiposEmojis = [
+                    { char: '🌻', class: 'girasol' },
+                    { char: '✨', class: 'estrella-emoji' },
+                    { char: '🌙', class: 'luna' }
+                ];
+                
+                lluviaEmojis.innerHTML = ''; // Limpiar emojis existentes al redimensionar
+
+                for (let i = 0; i < cantidadEmojis; i++) {
+                    const emoji = document.createElement('div');
+                    emoji.classList.add('emoji');
+                    
+                    const tipo = tiposEmojis[Math.floor(Math.random() * tiposEmojis.length)];
+                    emoji.innerHTML = tipo.char;
+                    emoji.classList.add(tipo.class);
+
+                    const duration = Math.random() * 10 + 10; // Duración entre 10s y 20s
+                    const delay = Math.random() * 15; // Retraso hasta 15s
+
+                    emoji.style.left = Math.random() * 100 + 'vw';
+                    emoji.style.animationName = Math.random() < 0.5 ? 'caer' : 'caer-lenta';
+                    emoji.style.animationDuration = duration + 's';
+                    emoji.style.animationDelay = delay + 's';
+                    emoji.style.fontSize = Math.random() * 16 + 20 + 'px'; // Tamaños variados
+
+                    lluviaEmojis.appendChild(emoji);
+                }
+            }
+            
+            // Abrir la carta
+            corazonBtn.addEventListener('click', () => {
+                carta.classList.add('mostrar');
+                cerrarBtn.classList.add('mostrar');
+                corazonBtn.classList.add('pulsado');
+                
+                // Intentar reproducir música en la primera interacción
+                if (musicaFondo.paused) {
+                    musicaFondo.play().then(() => {
+                        iconoMusica.classList.remove('fa-play');
+                        iconoMusica.classList.add('fa-pause');
+                        nombreCancion.classList.add('mostrar');
+                        gifContainer.classList.add('mostrar');
+                    }).catch(error => {
+                        console.log("La reproducción automática fue bloqueada por el navegador.");
+                    });
+                }
+                
+                setTimeout(() => {
+                    corazonBtn.classList.remove('pulsado');
+                }, 800); // Duración de la animación de latido
+            });
+
+            // Cerrar la carta
+            cerrarBtn.addEventListener('click', () => {
+                carta.classList.remove('mostrar');
+                cerrarBtn.classList.remove('mostrar');
+            });
+
+            // Controlar la música (play/pause)
+            controlMusica.addEventListener('click', () => {
+                if (musicaFondo.paused) {
+                    musicaFondo.play();
+                    iconoMusica.classList.remove('fa-play');
+                    iconoMusica.classList.add('fa-pause');
+                    nombreCancion.classList.add('mostrar');
+                    gifContainer.classList.add('mostrar');
+                } else {
+                    musicaFondo.pause();
+                    iconoMusica.classList.remove('fa-pause');
+                    iconoMusica.classList.add('fa-play');
+                    nombreCancion.classList.remove('mostrar');
+                    gifContainer.classList.remove('mostrar');
+                }
+            });
+
+            // Inicializar la lluvia de emojis y volver a crearla si la ventana cambia de tamaño
+            crearLluviaEmojis();
+            window.addEventListener('resize', crearLluviaEmojis);
+        });
+    </script>
+</body>
+</html>
